@@ -9,11 +9,25 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This page presents a macroeconomic model I developped for the Kenyan economy with the [R language](https://www.r-project.org/). Code is available [here](https://github.com/ant1h/forecasting-kenya).
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+The model was estimated on Kenyan data while I did some consulting for the Kenyan National Treasury but the code could probably be easily adapted to other countries.
+
+# Objectives of the model
+
+The model was developed from a policy maker perspective. This means it could be used to provide insights to support choices in economic policy and public finance.
+
+Knowing this, I think the model should fulfil 3 main objectives:
+
+1. **Provide reliable forecasts in the short-run** (2-3 years).
+
+2. **Provide insights about the uncertainty around forecasts.** Economic forecast are always uncertain: this can be due to data or modelling limitations but economic behaviors are anyway non-deterministic processes that have inherent uncertainty. A good policy decision framework should not only rely on a central prediction but also take into account other possible outcomes and their probabilities. It is not always easy to persuade a policy makers on the merits of this idea  but I really believe that a statement like “there is a 40% that growth will be between 2% and 4%” is much more valuable than to say “it’s going to be 3%”.
+
+3. **Provide interpretable results.** As it is going to inform discussions on policies, it is important to explain why we ended up with a specific forecast. When estimating the model, this means that we should not only base our modelling choices on statistical fit or forecasting performance but also make sure that there are always economic soundness behind our equations.
+
+
+
 
 ```{r cars}
 summary(cars)
