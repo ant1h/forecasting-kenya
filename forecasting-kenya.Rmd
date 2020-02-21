@@ -18,6 +18,8 @@ The model was developed from a policy maker perspective. This means it could be 
 
 Knowing this, I think the model should fulfil 3 main objectives:
 
+
+
 1. **Provide reliable forecasts in the short-run** (2-3 years).
 
 2. **Provide insights about the uncertainty around forecasts.** Economic forecast are always uncertain: this can be due to data or modelling limitations but economic behaviors are anyway non-deterministic processes that have inherent uncertainty. A good policy decision framework should not only rely on a central prediction but also take into account other possible outcomes and their probabilities. It is not always easy to persuade a policy makers on the merits of this idea  but I really believe that a statement like “there is a 40% that growth will be between 2% and 4%” is much more valuable than to say “it’s going to be 3%”.
