@@ -9,7 +9,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Antoine Herlin" />
 
 
 <title>Forecasting the economy of Kenya</title>
@@ -291,23 +290,14 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Forecasting the economy of Kenya</h1>
-<h4 class="author">Antoine Herlin</h4>
-<h4 class="date">21 février 2020</h4>
 
 </div>
 
 
-<p>This page presents a macroeconomic model I developped for the Kenyan economy with the <a href="https://www.r-project.org/">R language</a>. Code is available <a href="https://github.com/ant1h/forecasting-kenya">here</a>.</p>
-<p>The model was estimated on Kenyan data while I did some consulting for the Kenyan National Treasury but the code could probably be easily adapted to other countries.</p>
-<div id="objectives-of-the-model" class="section level1">
-<h1>Objectives of the model</h1>
-<p>The model was developed from a policy maker perspective. This means it could be used to provide insights to support choices in economic policy and public finance.</p>
-<p>Knowing this, I think the model should fulfil 3 main objectives:</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>Provide reliable forecasts in the short-run</strong> (2-3 years).</p></li>
-<li><p><strong>Provide insights about the uncertainty around forecasts.</strong> Economic forecast are always uncertain: this can be due to data or modelling limitations but economic behaviors are anyway non-deterministic processes that have inherent uncertainty. A good policy decision framework should not only rely on a central prediction but also take into account other possible outcomes and their probabilities. It is not always easy to persuade a policy makers on the merits of this idea but I really believe that a statement like “there is a 40% that growth will be between 2% and 4%” is much more valuable than to say “it’s going to be 3%”.</p></li>
-<li><p><strong>Provide interpretable results.</strong> As it is going to inform discussions on policies, it is important to explain why we ended up with a specific forecast. When estimating the model, this means that we should not only base our modelling choices on statistical fit or forecasting performance but also make sure that there are always economic soundness behind our equations.</p></li>
-</ol>
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
 <pre class="r"><code>summary(cars)</code></pre>
 <pre><code>##      speed           dist       
 ##  Min.   : 4.0   Min.   :  2.00  
@@ -316,12 +306,12 @@ $(document).ready(function () {
 ##  Mean   :15.4   Mean   : 42.98  
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00</code></pre>
+</div>
 <div id="including-plots" class="section level2">
 <h2>Including Plots</h2>
 <p>You can also embed plots, for example:</p>
-<p><img src="index_files/figure-html/pressure-1.png" width="672" /></p>
+<p><img src="forecasting-kenya_files/figure-html/pressure-1.png" width="672" /></p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
-</div>
 </div>
 
 

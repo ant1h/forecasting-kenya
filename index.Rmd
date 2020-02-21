@@ -1,7 +1,6 @@
 ---
-title: "forecasting-kenya"
+title: "Forecasting the economy of Kenya"
 author: "Antoine Herlin"
-date: "21 février 2020"
 output: html_document
 ---
 

@@ -9,4 +9,3 @@ navbar:
       href: forecasting-kenya.html
 output:
   html_document:
-  theme: cosmo
