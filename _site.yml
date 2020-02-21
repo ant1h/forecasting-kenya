@@ -1,0 +1,12 @@
+name: "forecasting-kenya"
+output_dir: "docs"
+navbar:
+  title: "Forecasting Kenya"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Speed and Distance"
+      href: forecasting-kenya.html
+output:
+  html_document:
+  theme: cosmo

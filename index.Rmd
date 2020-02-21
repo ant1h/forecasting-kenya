@@ -1,9 +1,9 @@
 ---
-title: "Forecasting the economy of Kenya"
+title: "forecasting-kenya"
+author: "Antoine Herlin"
+date: "21 février 2020"
+output: html_document
 ---
-
-
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
