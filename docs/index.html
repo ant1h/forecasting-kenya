@@ -298,15 +298,17 @@ $(document).ready(function () {
 
 <p>This page presents a macroeconomic model I developped for the Kenyan economy with the <a href="https://www.r-project.org/">R language</a>. Code is available <a href="https://github.com/ant1h/forecasting-kenya">here</a>.</p>
 <p>The model was estimated on Kenyan data while I did some consulting for the Kenyan National Treasury but the code could probably be easily adapted to other countries.</p>
+<hr />
 <div id="objectives-of-the-model" class="section level2">
 <h2>Objectives of the model</h2>
-<p>The model was developed from a policy maker perspective. This means it could be used to provide insights to support choices in economic policy and public finance.</p>
+<p>The model was developed from a policy maker perspective. This means the intended usage would be to provide insights to support choices in economic policy and public finance.</p>
 <p>Knowing this, I think the model should fulfil 3 main objectives:</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>Provide reliable forecasts in the short-run</strong> (2-3 years).</p></li>
 <li><p><strong>Provide insights about the uncertainty around forecasts.</strong> Economic forecast are always uncertain: this can be due to data or modelling limitations but economic behaviors are anyway non-deterministic processes that have inherent uncertainty. A good policy decision framework should not only rely on a central prediction but also take into account other possible outcomes and their probabilities. It is not always easy to persuade a policy makers on the merits of this idea but I really believe that a statement like “there is a 40% that growth will be between 2% and 4%” is much more valuable than to say “it’s going to be 3%”.</p></li>
 <li><p><strong>Provide interpretable results.</strong> As it is going to inform discussions on policies, it is important to explain why we ended up with a specific forecast. When estimating the model, this means that we should not only base our modelling choices on statistical fit or forecasting performance but also make sure that there are always economic soundness behind our equations.</p></li>
 </ol>
+<hr />
 </div>
 <div id="quick-look-at-the-data" class="section level2">
 <h2>Quick look at the data</h2>
@@ -317,6 +319,7 @@ source(&#39;data.R&#39;) # Load and prepare data</code></pre>
 <p>Let’s plot real GDP growth since 1970 and contributions from each expenditure to growth:</p>
 <pre class="r"><code>plot(contribgdp_plot)</code></pre>
 <p><img src="index_files/figure-html/data_exploration-1.png" width="672" /></p>
+<hr />
 </div>
 <div id="models-estimation" class="section level2">
 <h2>Models estimation</h2>
@@ -335,7 +338,7 @@ window=c(min(data$Year),max(data$Year),max(data$Year)+1,end_pred)
 pred_len &lt;- (end_pred - max(data$Year))
 
 # Uncertainty parameters
-int1 &lt;- 60 # first confidence interval  (in %)
+int1 &lt;- 80 # first confidence interval  (in %)
 int2 &lt;- 95 # second confidence interval (in %)
 
 # Estimate an economic model
@@ -346,16 +349,70 @@ autoplot(ts(eco_model[[3]]$gdp,start=window[1])) +
   annotate(&quot;text&quot;, x=window[3]+3, y=max(eco_model[[3]]$gdp), label= &quot;Forecast&quot;, color=&#39;blue&#39;,size=5)+
   labs(title = &quot;Real GDP growth forecast from economic model&quot;,y=&#39;Real GDP growth&#39;)</code></pre>
 <p><img src="index_files/figure-html/emodel-1.png" width="672" /></p>
+<hr />
 </div>
 <div id="performance-evaluation" class="section level2">
 <h2>Performance evaluation</h2>
-<p>So far, the specifications of our models have been chosen based on fit on historical data (with a penalization on complexity like in the AIC information criterion) and some economic sense.</p>
+<p>So far, the specifications of our models have been chosen based on the fit on historical data (with a penalization on complexity like in the AIC information criterion) and some economic sense.</p>
 <p>To better assess the actual forecasting performances of these models, it is also important to have out-of-sample performance metrics to have an idea of how well the models would do if we were to use them in the future.</p>
 <p>To do that we split our data into two sets. The 1st set (estimation window) will be used to estimate the models. We then forecast for the years of the 2nd set (forecasting window) to compare predictions with actual data and compute a metric to evaluate forecasting accuracy</p>
-<p>There are many ways to perform out-of-sample evaluation (Fixed Estimation Window / Expanding Estimation Window / Rolling Estimation Window). Here, I think that we need to take into account that: * we don’t have plenty of data, so we should use as many years as possible in the estimation window * we want our forecasting model to perform well in a 2-3 years forecasting window * we want our forecasting model to perform well in the “current years” (rather than far in the past)</p>
-<p>So the strategy I retain here is to estimate models on the window [1970 to Y]. Then forecast for years Y+1 to Y+3, that for Y+1 between 2007 and 2016 (Y+3 from 2009 to 2018).</p>
-<p>We can use different metrics for accuracy: * Bias is the difference between the forecasts and the correct outcome (on average) * Variance shows if a narrow range of outcomes is compatible with the forecast * Mean Squared Forecast Error (MSE) is a combination of the two, MSE = SE² + BIAS²</p>
+<p>There are many ways to perform out-of-sample evaluation (Fixed Estimation Window / Expanding Estimation Window / Rolling Estimation Window). Here, I think that we need to take into account that:</p>
+<ul>
+<li>we don’t have plenty of data, so we should use as many years as possible in the estimation window</li>
+<li>we want our forecasting model to perform well in a 2-3 years forecasting window</li>
+<li>we want our forecasting model to perform well in the “current years” (rather than far in the past)</li>
+</ul>
+<p>This is why the strategy I retain here is to estimate models on the window [1970 to Y]. Then forecast for years Y+1 to Y+3, that for Y+1 between 2007 and 2016 (Y+3 from 2009 to 2018).</p>
+<p>We can use different metrics for accuracy:</p>
+<ul>
+<li>Bias is the difference between the forecasts and the correct outcome (on average)</li>
+<li>Variance shows if a narrow range of outcomes is compatible with the forecast</li>
+<li>Mean Squared Forecast Error (MSE) is a combination of the two, MSE = SE² + BIAS²</li>
+</ul>
 <p>The choice of metric should reflect forecaster’s preferences. Usually it is considered that large error are very costly so MSE is more relevant than just bias. Also note that MSE assume that forecasts errors costs are symetrics, wich is not always the case (ex: deflation often perceived as more costly than inflation).</p>
+<p>This evaluation procedure is coded in a loop in the ‘perf.R’ file which compute thr 3 metrics for each model. (NB: this can take a moment, like a whole minute as there are many models to estimate)</p>
+<pre class="r"><code>source(&#39;perf.R&#39;) # Performance evaluation procedure
+plot_grid(p1, p2, p3, labels=c(&quot;Bias&quot;, &quot;Variance&quot;,&quot;MSE&quot;), ncol = 3, nrow = 1)</code></pre>
+<p><img src="index_files/figure-html/perf-1.png" width="672" /></p>
+<p>So here we come to a bit crual but common conclusion: the simple univariate model actually performs better in the out-of-sample evaluations.</p>
+<p>This could be seen as a trade-off between interpretability and performance. It is indeed possible that some specifications we favored for their economic sense (ex: exports equation with exchange rate) are actually less accurate for forecasting.</p>
+<p>It also shows that there is some room for improvement in the specifications design. Maybe additionnal data could also be considered.</p>
+<hr />
+</div>
+<div id="uncertainty-evaluation" class="section level2">
+<h2>Uncertainty evaluation</h2>
+<p>To get an idea of the uncertainty around our forecasts, we compute here prediction intervals, that is intervals within which we expect predicted value to lie with an estimated probability.</p>
+<p>To do this what wee need to do is to estimate the standard deviation of the residuals in the forecasting window, which depends on the specific design of each autoregressive model. Then, under the assumption that the residuals are uncorrelated and normally distributed (which we check that is actually reasonable for each model in our code), then we can compute a gaussian prediction interval in the form ± ϕ (1−α/2) σn(h) where ϕ (1−α/2) denotes the (1−α/2) quantile of the standard normal distribution function (1.96 for a 95% prediction interval). Everything is nicely explained in the <a href="https://www.springer.com/gp/book/9781475777505">Brockwell &amp; Davis textbook</a> for example.</p>
+<p>The statistical and economic models raise an additionnal issue because GDP growth is not modelled and forecasted directly but is obtained as the aggregate of GDP expenditures. Adding up expenditures forecasts will give a good estimate of GDP forecast. But prediction intervals are more tricky due to the correlations between forecast errors. A practical way to evaluate a prediction interval for GDP is to use simulation and then infer the distribution.</p>
+<p>The plot below shows the estimated densities for each component after N simulations and for the sum (real GDP).</p>
+<pre class="r"><code>source(&#39;risks.R&#39;) # Performance evaluation procedure
+r &lt;- risk_eco(eco_model,window,500) # estimate forecast uncertainty from 500 simulations
+plot(r[[2]])</code></pre>
+<p><img src="index_files/figure-html/risks_functions-1.png" width="672" /></p>
+<p>We can now compute the predictions intervals. The plot below shows prediction intervals for a one year ahead forecast (year 2019 here).</p>
+<pre class="r"><code>start_pred=window[3]
+br &lt;- as_tibble(r[[1]][,as.character(start_pred),]) # keep only start_pred
+br &lt;- bind_cols(serie=dimnames(r[[1]])[[1]],br) # add dimnames
+dta &lt;- eco_model[[2]]
+br[,-1] &lt;- br[,-1] * t((dta[dta$Year==start_pred,br$serie]/as.numeric(dta[dta$Year==start_pred,&#39;gdp&#39;]))) # multiply by weight in gdp
+for (i in 3:6){br[,i]&lt;-br[,i]-br[,2]}
+br &lt;- select(br,-2) # get rid of 50%
+br &lt;- gather(br,key=&#39;level&#39;,value=&#39;risk&#39;,-serie)
+br[br$serie==&#39;imp&#39;,&#39;risk&#39;]&lt;- -br[br$serie==&#39;imp&#39;,&#39;risk&#39;]
+br$level &lt;- factor(br$level,ordered = T,levels=c(&#39;95%&#39;,&#39;80%&#39;,&#39;5%&#39;,&#39;20%&#39;))
+br$serie &lt;- factor(br$serie,ordered = T,levels=c(&#39;gdp&#39;,&#39;exp&#39;,&#39;imp&#39;,&#39;h_cons&#39;,&#39;gov_cons&#39;,&#39;gfcf&#39;,&#39;invent&#39;))
+br$risk_lab &lt;- 100*round(br$risk,3)
+ggplot(data=br, aes(x=serie, y=risk, fill=level)) +
+  geom_bar(stat=&quot;identity&quot;)+
+  scale_fill_brewer(palette=&quot;Paired&quot;)+
+  scale_y_continuous(labels=scales::percent) +
+  geom_text(aes(y=(risk), label=risk_lab), vjust=1.6,color=&quot;white&quot;, size=3.5)+
+  labs(title = &quot;Prediction intervals for real GDP and contribution of GDP expenditures&quot;,
+       y=&#39;Prediction intervals&#39;,
+       subtitle= &quot;for Y+1 forecast (2019)&quot;)+
+  theme_minimal()</code></pre>
+<p><img src="index_files/figure-html/predictions_int-1.png" width="672" /></p>
+<p>How to read this: we believe that there is a 60% chance that the real GDP growth in 2019 will lie between -4.3% and +4.6% from our central forecast.</p>
 </div>
 
 

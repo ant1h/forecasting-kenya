@@ -192,12 +192,27 @@ emodel <- function(data,exdata,wind){
   #   Here we directly estimate chosen equations
   fit_exp       <- auto.arima(ddata[,"exp"],xreg=ddata[,c("ssg","dexch")],max.p=5,max.q=5,allowmean=T)
   fit_imp       <- auto.arima(ddata[,"imp"],xreg=ddata[,c("exp","doil")],max.p=5,max.q=5,allowmean=T)
+
   fit_gfcf      <- auto.arima(ddata[,"gfcf"],xreg=ddata[,c("int")],allowmean=T)
+  
   fit_dprice    <- auto.arima(ddata[,"dprice"],xreg=ddata[,c("int","dexch")],allowmean=T)
   fit_h_cons    <- auto.arima(ddata[,"h_cons"],xreg=ddata[,c("dint","dprice")],allowmean=T)
   fit_gov_cons  <- auto.arima(ddata[,"gov_cons"],allowmean=T) # AR1
   fit_invent    <- auto.arima(ddata[,"invent"],allowmean=T)
   fit_other     <- auto.arima(ddata[,"other"],allowmean=T)
+  
+  
+  
+  
+  # Give proper serie name
+  fit_exp$series       <- 'exp'
+  fit_imp$series       <- 'imp'
+  fit_gfcf$series      <- 'gfcf'
+  fit_dprice$series    <- 'dprice'
+  fit_h_cons$series    <- 'h_cons'
+  fit_gov_cons$series  <- 'gov_cons'
+  fit_invent$series    <- 'invent'
+  fit_other$series     <- 'other'
   
   
   

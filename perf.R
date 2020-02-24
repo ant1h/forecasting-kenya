@@ -60,7 +60,7 @@ p3<-ggplot(data=mperf[mperf$metric=='mse',], aes(x=model, y=value)) +
   theme_minimal()
 
 
-plot_grid(p1, p2, p3, labels=c("Bias", "Variance","MSE"), ncol = 3, nrow = 1)
+# plot_grid(p1, p2, p3, labels=c("Bias", "Variance","MSE"), ncol = 3, nrow = 1)
 
 
 # so here we illustrate a crual but well-known conclusion
