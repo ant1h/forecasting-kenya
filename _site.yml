@@ -5,7 +5,5 @@ navbar:
   left:
     - text: "Home"
       href: index.html
-    - text: "Speed and Distance"
-      href: forecasting-kenya.html
 output:
   html_document:

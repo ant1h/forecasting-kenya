@@ -1,37 +1,28 @@
-## Welcome to GitHub Pages
+## Forecasting the economy of Kenya with R
 
-You can use the [editor on GitHub](https://github.com/ant1h/forecasting-kenya/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This repository contains a macroeconomic model I developped for the Kenyan economy with the [R language](https://www.r-project.org/).
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+I wrote a quick presentation page [here](https://ant1h.github.io/forecasting-kenya/).
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Files description
 
-```markdown
-Syntax highlighted code block
+| File          | Description           |
+| ------------- |-------------|
+| utils.R     | Load required libraries and functions |
+| data.R      | Load and prepare data    |
+| baseline_model.R | Detailed estimation of a baseline model     |
+| stat_model.R | Detailed estimation of a statistical model     |
+| eco_model.R | Detailed estimation of an economic model     |
+| model_function.R | Quick estimation of models in a function   |
+| perf.R | Out-of-sample performance evaluation of models   |
+| risks.R | Uncertainty evaluation around forecasts  |
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
+### Data inputs
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ant1h/forecasting-kenya/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+| File          | Description           |
+| ------------- |-------------|
+| un_gdp_constant.csv    | Kenya GDP components in constant prices from UN national accounts|
+| ext_data.csv  | External data from UN, IMF, World bank   |
